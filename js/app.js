@@ -12,37 +12,41 @@ function main(){
     let productList = [];
 
     productList.push({
+        id:0,
         name: 'Bike',
         price: 120,
         image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">',
     });
 
     productList.push({
+        id:1,
         name: 'Bike',
         price: 150,
         image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">',
     });
 
     productList.push({
+        id:2,
         name: 'Bike',
         price: 200,
         image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">',
     });
 
     productList.push({
+        id:3,
         name: 'Bike',
         price: 500,
         image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">',
     });
 
     productList.push({
+        id:4,
         name: 'Bike',
         price: 700,
         image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">',
     });
 
     renderProducts(productList);
-
 }
 
 
@@ -70,6 +74,9 @@ function toggleNavMobile(e) {
     let shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 
     let productDetail = document.querySelector('#product-detail');
+
+    let main = document.querySelector('.main-container');
+    main.classList.toggle('inactive');
 
     if(!shoppingCartContainer.classList.contains('inactive')){
         shoppingCartContainer.classList.add('inactive');
@@ -166,6 +173,28 @@ function openDetail(e){
         productDetail.classList.add('inactive');
     })
 }
+
+
+/* <aside id="product-detail" class="inactive">
+<div class="product-detail-close">
+  <img src="./icons/icon_close.png" alt="close">
+</div>
+<img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
+<div class="product-info">
+  <p>$35,00</p>
+  <p>Bike</p>
+  <p>With its practical position, this bike also fulfills a decorative function, add your hall or workspace.</p>
+  <button class="primary-button add-to-cart-button">
+    <img src="./icons/bt_add_to_cart.svg" alt="add to cart">
+    Add to cart
+  </button>
+</div>
+</aside> */
+
+function renderDetail(producto){
+
+}
+
 
 
 main();
