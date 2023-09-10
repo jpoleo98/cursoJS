@@ -117,14 +117,21 @@ function toggleCarritoCompras(e){
 }
 
 function renderProducts(productList){
+
+    let productCheaking = [];
+
     for(product of productList){
 
         let productCard = document.createElement('div');
         productCard.classList.add('product-card');
 
         let img = document.createElement('img');
-        img.setAttribute('src', product.image)
-        img.addEventListener('click',openDetail);
+        img.setAttribute('src', product.image);
+        img.setAttribute('marcador',product.id);
+        img.addEventListener('click',(e)=>{
+            openDetail(e.target.getAttribute('marcador'),productList);
+            
+        });
 
         let productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
@@ -142,6 +149,13 @@ function renderProducts(productList){
         let productFigure = document.createElement('figure');
         let productImgCard = document.createElement('img');
         productImgCard.setAttribute('src','./icons/bt_add_to_cart.svg')
+        productImgCard.setAttribute('marcador',product.id);
+        const countItems = document.querySelector('#cantidad');
+        countItems.textContent = '0';
+        productImgCard.addEventListener('click',(e)=>{
+            productCheaking.push(e.target.getAttribute('marcador'));
+            countItems.textContent = `${productCheaking.length}`;
+        })
         
         productFigure.appendChild(productImgCard);
         productInfo.append(productInfoDiv, productFigure);
@@ -153,8 +167,15 @@ function renderProducts(productList){
     }
 }
 
-function openDetail(e){
+function openDetail(id,productList){
+
+    console.log(productList);
+
     let productDetail = document.querySelector('#product-detail');
+    if(productDetail.classList.contains('inactive')){
+        renderDetail(id,productList);
+    }
+    
     productDetail.classList.remove('inactive');
     let shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 
@@ -171,30 +192,50 @@ function openDetail(e){
     let close = document.querySelector('.product-detail-close')
     close.addEventListener('click',() =>{
         productDetail.classList.add('inactive');
+        const productInfo = document.querySelector('.remove');
+        productInfo.remove();
+        const imagenInfo = document.querySelector('.imgDetailP');
+        imagenInfo.remove();
     })
 }
 
+function renderDetail(id,productList){
+    productList.forEach(element => {
+        if(id == element.id){
+            console.log(element.price);
+            const productDetail = document.querySelector('#product-detail');
 
-/* <aside id="product-detail" class="inactive">
-<div class="product-detail-close">
-  <img src="./icons/icon_close.png" alt="close">
-</div>
-<img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
-<div class="product-info">
-  <p>$35,00</p>
-  <p>Bike</p>
-  <p>With its practical position, this bike also fulfills a decorative function, add your hall or workspace.</p>
-  <button class="primary-button add-to-cart-button">
-    <img src="./icons/bt_add_to_cart.svg" alt="add to cart">
-    Add to cart
-  </button>
-</div>
-</aside> */
+            let imgProductDetail = document.createElement('img');
+            imgProductDetail.setAttribute('src',element.image);
+            imgProductDetail.classList.add('imgDetailP')
 
-function renderDetail(producto){
+            const productInfoDiv = document.createElement('div');
+            productInfoDiv.classList.add('product-info');
+            productInfoDiv.classList.add('remove');
 
+            const parrafoPrice = document.createElement('p');
+            parrafoPrice.innerText = `$${element.price},00`;
+
+            const parrafoName = document.createElement('p');
+            parrafoName.innerText = `${element.name}`;
+
+            const parrafoDescribe = document.createElement('p');
+            parrafoDescribe.innerText = 'With its practical position, this bike also fulfills a decorative function, add your hall or workspace.';
+
+            const buttom = document.createElement('buttom');
+            buttom.classList.add('primary-button','add-to-cart-button');
+            buttom.innerText = 'Add to cart';
+
+            const iconoCart = document.createElement('img');
+            iconoCart.setAttribute('src','./icons/bt_add_to_cart.svg');
+            buttom.appendChild(iconoCart);
+
+            productInfoDiv.append(parrafoPrice,parrafoName,buttom);
+
+            productDetail.append(imgProductDetail,productInfoDiv);
+        }
+    });
 }
-
 
 
 main();

@@ -263,6 +263,10 @@
     font-weight: bold;
   }
 
+  .deleteOrder{
+    cursor: pointer;
+  }
+
   .primary-button {
     background-color: var(--hospital-green);
     border-radius: 8px;
