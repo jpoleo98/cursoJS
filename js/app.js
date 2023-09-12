@@ -1,6 +1,7 @@
 let cheaking = [];
 let productList = [];
 let Order = [];
+let total = 0;
 
 function main() {
 
@@ -99,6 +100,7 @@ function toggleCarritoCompras(e) {
     let navDesktop = document.querySelector('.desktop-menu');
     let productDetail = document.querySelector('#product-detail');
     let closeCard = document.querySelector('#arrow');
+    totalCard();
 
 
     if (!navMobile.classList.contains('inactive')) {
@@ -178,8 +180,12 @@ function addToCard(id){
     if (id == product.id) {
         cheaking.push(product);
         countItems.textContent = `${cheaking.length}`;
-        console.log(cheaking);
+        renderShoppingCard(cheaking);
     }
+
+    totalCard();
+
+
 }
 
 function openDetail(id, productList, cheaking) {
@@ -262,5 +268,73 @@ function renderDetail(id, productList, cheaking) {
     });
 }
 
+/*
+      <div class="shopping-cart">
+        <figure>
+          <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
+        </figure>
+        <p>Bike</p>
+        <p>$30,00</p>
+        <img class="deleteOrder" src="./icons/icon_close.png" alt="close">
+      </div>
+
+*/
+
+function renderShoppingCard(cheaking){
+
+    total = 0;
+    let j = 0;
+    resetElementCard();
+
+    for(product of cheaking){
+        total+=Number(product.price);
+
+        let productElement = document.querySelector('.productElement');
+
+        let shoppingCart = document.createElement('div')
+        shoppingCart.classList.add('shopping-cart')
+
+        let figure = document.createElement('figure');
+        let imgProduct = document.createElement('img');
+        imgProduct.setAttribute('src',product.image);
+        imgProduct.setAttribute('alt',product.name);
+        figure.appendChild(imgProduct);
+
+        let parrafoNameProduct = document.createElement('p');
+        parrafoNameProduct.innerText = `${product.name}`;
+
+        let parrafoPriceProduct = document.createElement('p');
+        parrafoPriceProduct.innerText = `$${product.price},00`;
+
+        let imgIconoDelete = document.createElement('img');
+        imgIconoDelete.setAttribute('src','./icons/icon_close.png');
+        imgIconoDelete.setAttribute('deleteCart',j)
+        imgIconoDelete.addEventListener('click',(e)=>{
+            console.log(e.target.getAttribute('deleteCart'));
+        })
+
+        shoppingCart.append(figure,parrafoNameProduct,parrafoPriceProduct,imgIconoDelete);
+
+        productElement.appendChild(shoppingCart); 
+        j++;
+
+    }
+    
+
+}
+
+function totalCard(){
+    let totalCard = document.querySelector('#total');
+    totalCard.innerText = `$${total},00`;
+}
+
+function resetElementCard(){
+    let shoppingCart = document.querySelectorAll('.shopping-cart');
+    if(shoppingCart != null){
+        shoppingCart.forEach(shop =>{
+            shop.parentNode.removeChild(shop);
+        })
+    }
+}
 
 main();
