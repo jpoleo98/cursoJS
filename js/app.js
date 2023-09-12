@@ -175,16 +175,9 @@ function renderProducts(productList, productCheaking) {
 
 function addToCard(id){
 
-    const countItems = document.querySelector('#cantidad');
-
     if (id == product.id) {
-        cheaking.push(product);
-        countItems.textContent = `${cheaking.length}`;
-        renderShoppingCard(cheaking);
+        OperationCard('suma',product)
     }
-
-    totalCard();
-
 
 }
 
@@ -310,7 +303,8 @@ function renderShoppingCard(cheaking){
         imgIconoDelete.setAttribute('src','./icons/icon_close.png');
         imgIconoDelete.setAttribute('deleteCart',j)
         imgIconoDelete.addEventListener('click',(e)=>{
-            console.log(e.target.getAttribute('deleteCart'));
+            elementoDetele = e.target.getAttribute('deleteCart');
+            OperationCard('resta',elementoDetele);
         })
 
         shoppingCart.append(figure,parrafoNameProduct,parrafoPriceProduct,imgIconoDelete);
@@ -321,6 +315,24 @@ function renderShoppingCard(cheaking){
     }
     
 
+}
+
+function OperationCard(operation,producto){
+    const countItems = document.querySelector('#cantidad');
+
+    if( operation == 'suma'){
+        cheaking.push(producto);
+    }
+
+    if (operation == 'resta') {
+        let elemento = cheaking[producto];
+        total-=elemento.price
+        cheaking.splice(producto,1);
+    }
+
+    countItems.textContent = `${cheaking.length}`;
+    renderShoppingCard(cheaking);
+    totalCard();
 }
 
 function totalCard(){
